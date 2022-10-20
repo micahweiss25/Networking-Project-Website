@@ -1,8 +1,13 @@
 from http import server
 import time
+import os
 
 hostName = "localhost"
 serverPort = 8080
+
+global dir_list
+cur_path = os.getcwd()
+dir_list = os.listdir(cur_path)
 
 
 global lastModified
@@ -16,52 +21,55 @@ class MyServer(server.BaseHTTPRequestHandler):
         if self.path == '/':
             with open('templates/index.html', 'rb') as f:
                 self.custom_headers(ts, f.read(), 200, "text/html", False)
-        elif self.path == "/willy_wonka.gif":
-            with open("content/willy_wonka.gif", "rb") as f:
-                self.custom_headers(ts, f.read(), 200, "image/gif", False)
-        elif self.path == '/image1':
-            with open("templates/image1.jpg", "rb") as f:
-                self.custom_headers(ts, f.read(), 200, "image/jpeg", False)
-        elif self.path == '/superSecret':
-            with open("templates/superSecret.html", "rb") as f:
-                self.custom_headers(ts, f.read(), 200, "text/html", False)
-        elif self.path == '/dank_gif.gif':
-            with open("content/dank_gif.gif", "rb") as f:
-                self.custom_headers(ts, f.read(), 200, "image/gif", False)
         else:
-            self.send_error(404, f'File Not Found: {self.path}')
+            try:
+                with open(self.path[1:], 'rb') as f:
+                    ext = os.path.splitext(self.path.split("/")[-1])[1]
+                    self.custom_headers(ts, f.read(), 200, ext, False)
+            except:
+                with open("moved", "r") as f:
+                    if self.path in f:
+                        self.send_error(301, "Moved Permanently")
+                    else:
+                        self.send_error(404, "File Not Found")
 
     def do_GET(self):
+        print(cur_path)
         ts = time.strftime("%a, %d %b %Y %H:%M:%S GMT", time.gmtime())
+        print(f"file path: {self.path}")
         if self.path == '/':
             with open('templates/index.html', 'rb') as f:
-                self.custom_headers(ts, f.read(), 200, "text/html", True)
-        elif self.path == "/willy_wonka.gif":
-            with open("content/willy_wonka.gif", "rb") as f:
-                self.custom_headers(ts, f.read(), 200, "image/gif", True)
-        elif self.path == "/image1":
-            with open("templates/image1.jpg", "rb") as f:
-                self.custom_headers(ts, f.read(), 200, "image/jpeg", True)
-        elif self.path == '/superSecret':
-            with open("templates/superSecret.html", "rb") as f:
-                self.custom_headers(ts, f.read(), 200, "text/html", True)
-        elif self.path == "/dank_gif.gif":
-            with open("content/dank_gif.gif", "rb") as f:
-                self.custom_headers(ts, f.read(), 200, "image/gif", True)
-        elif self.path == "/respect_the_drip.css":
-            with open("static/respect_the_drip.css", "rb") as f:
-                self.custom_headers(ts, f.read(), 200, "text/css", True)
+                self.custom_headers(ts, f.read(), 200, ".html", True)
         else:
-            self.send_error(404, f'File Not Found: {self.path}')
+            try:
+                with open(self.path[1:], 'rb') as f:
+                    ext = os.path.splitext(self.path.split("/")[-1])[1]
+                    self.custom_headers(ts, f.read(), 200, ext, True)
+            except:
+                with open("moved", "r") as f:
+                    if self.path in f:
+                        self.send_error(301, "Moved Permanently")
+                    else:
+                        self.send_error(404, "File Not Found")
+
     def custom_headers(self, ts, webFile, response, content_type, get):
         if "If-Modified-Since" in self.headers and self.headers["If-Modified-Since"] == ts:
             self.send_response(304)
             self.end_headers()
         else:
             self.send_response(response)
+            if content_type == ".jpg":
+                self.send_header("Content-type", "image/jpg")
+            elif content_type == ".css":
+                self.send_header("Content-type", "text/css")
+            elif content_type == ".gif":
+                self.send_header("Content-type", "image/gif")
+            elif content_type == ".html":
+                self.send_header("Content-type", "text/html")
+            else:
+                self.send_error(404, "unknown extension")
             #self.send_header("Date", ts)
             #self.send_header("Server", "BaseHTTP/0.6 Python/3.8.10")
-            self.send_header("Content-type", content_type)
             self.send_header("Connection", "close")
             self.send_header("Last-Modified", lastModified)
             self.send_header("Content-Length", len(webFile))
