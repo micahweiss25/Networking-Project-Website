@@ -2,7 +2,7 @@ from http import server
 import time
 import os
 
-hostName = "localhost"
+hostName = "10.4.84.56"
 serverPort = 80
 
 global dir_list
