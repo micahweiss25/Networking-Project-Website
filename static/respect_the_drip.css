@@ -1,4 +1,1 @@
-H1 { font-face: "Comic Sans MS"; font-size: 100px; color: #000000; }
-p { font-face: "Comic Sans MS"; font-size: 60px; color: #000000; }
-body { background-color: blanchedalmond; }
-img {width: 20%; height: 20%;}
+body, html { height: 100%; margin: 0; background-image: url("../content/windowsXp.jpg"); height: 100%; background-position: center; background-repeat: no-repeat; background-size: cover;  }

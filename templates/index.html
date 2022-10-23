@@ -1,12 +1,31 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Main Page</title>
-        <link rel=stylesheet type="text/css" href="static/respect_the_drip.css">
-    </head>    
-    <body style="background-color: blanchedalmond;">
-        <h1>CDT Weiss, PROJECT 2</h1>
-        <p style="color:olive"><b>Welcome to my webpage! have a look a around!</b></p>
-        <img src="content/willy_wonka.gif">
+        <title>Windows Machine</title>
+        <link rel=stylesheet type="text/css" href="../static/respect_the_drip.css">
+    </head>
+    <body>
+            <a id="woka" href="../content/willy_wonka.gif">
+                <img src="../content/wonka_thumbnail.jpg" alt="Willy Wonka" style="width: 100px;margin:10px">
+                <p style="padding-left: 10px; ">Welcome.gif</p>
+            </a>
+            <a id="movie" href="../content/clip.mp4">
+                <img src="../content/clip_thumb.jpg" alt="movie clip" style="width:100px;height:100px;margin:10px;align-items: start;">
+                <p>movie_clip.mp4</p>
+            </a>
+            <a id="bug" href="../content/anon.jpg" onclick="startVirus()">
+                <img src="../content/bug.jpg" alt="malicious code" style="width:100px;height:100px;margin:10px;align-items: start;">
+                <p >VIRUS.exe</p>
+            </a>
+            <a id="word" href="../templates/word.html">
+                <img src="../content/word_img.jpg" alt="word doc" style="width:100px;height:100px;margin:10px;align-items: start">
+                <p>CS484_Notes.doc</p>
+            </a>
+        <img id="start" src="../content/start.jpg" style="align-items: baseline;width: 100%;height:30px;padding-top: 600px;">
+    <script>
+        function startVirus() {
+            alert("VIRUS.exe has been started. All your files are being encrypted!");
+        }
+    </script>
     </body>
 </html>
