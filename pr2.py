@@ -29,7 +29,7 @@ lastModified = time.strftime("%a, %d %b %Y %H:%M:%S GMT", time.gmtime())
 class MyServer(server.BaseHTTPRequestHandler):
     def do_HEAD(self):
         ts = time.strftime("%a, %d %b %Y %H:%M:%S GMT", time.gmtime())
-        if self.path == '/':
+        if self.path == '/' or self.path == '/index.html':
             with open('templates/windows.html', 'rb') as f:
                 self.custom_headers(ts, f.read(), 200, "text/html", False)
         else:
@@ -48,7 +48,7 @@ class MyServer(server.BaseHTTPRequestHandler):
         print(cur_path)
         ts = time.strftime("%a, %d %b %Y %H:%M:%S GMT", time.gmtime())
         print(f"file path: {self.path}")
-        if self.path == '/':
+        if self.path == '/' or self.path =='/index.html':
             with open('templates/windows.html', 'rb') as f:
                 self.custom_headers(ts, f.read(), 200, ".html", True)
         else:
