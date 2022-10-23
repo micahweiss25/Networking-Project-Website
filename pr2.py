@@ -3,7 +3,7 @@ import time
 import os
 
 hostName = "localhost"
-serverPort = 8080
+serverPort = 80
 
 global dir_list
 cur_path = os.getcwd()
@@ -24,7 +24,7 @@ lastModified = time.strftime("%a, %d %b %Y %H:%M:%S GMT", time.gmtime())
 # https://picamera.readthedocs.io/en/release-1.13/recipes2.html#web-streaming I used this web page that I found when working on a side project. I used the code to figure out how to format the get request.
 # https://docs.python.org/3/library/http.server.html I don't think I have to site python docs, but I used this site ase well
 # https://www.life.illinois.edu/edtech/html/styles/ I used this link to figure out static css formating
-# https://www.w3schools.com/html/default.asp
+# https://www.w3schools.com/html/default.asp used this cite to learn how to format text
 
 class MyServer(server.BaseHTTPRequestHandler):
     def do_HEAD(self):
