@@ -39,8 +39,8 @@ class MyServer(server.BaseHTTPRequestHandler):
                     self.custom_headers(ts, f.read(), 200, ext, False)
             except:
                 if self.path[1:] in list(moved_dict.keys()):
-                    self.send_error(301, "Moved Permanently")
                     self.send_header("Location", moved_dict[self.path[1:]])
+                    self.send_error(301, "Moved Permanently")
                 else:
                     self.send_error(404, "File Not Found")
 
@@ -58,8 +58,8 @@ class MyServer(server.BaseHTTPRequestHandler):
                     self.custom_headers(ts, f.read(), 200, ext, True)
             except:
                 if self.path[1:] in list(moved_dict.keys()):
-                    self.send_error(301, "Moved Permanently")
                     self.send_header("Location", moved_dict[self.path[1:]])
+                    self.send_error(301, "Moved Permanently")
                 else:
                     self.send_error(404, "File Not Found")
 
