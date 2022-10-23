@@ -59,7 +59,7 @@ class MyServer(server.BaseHTTPRequestHandler):
             except:
                 if self.path[1:] in list(moved_dict.keys()):
                     self.send_header("Location", moved_dict[self.path[1:]])
-                    self.send_error(301, "Moved Permanently")
+                    self.send_error(301, f"Moved Permanently to {moved_dict[self.path[1:]]}")
                 else:
                     self.send_error(404, "File Not Found")
 
